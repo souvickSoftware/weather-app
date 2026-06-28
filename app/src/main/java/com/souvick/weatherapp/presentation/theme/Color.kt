@@ -1,4 +1,4 @@
-package com.souvick.weatherapp.ui.theme
+package com.souvick.weatherapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
