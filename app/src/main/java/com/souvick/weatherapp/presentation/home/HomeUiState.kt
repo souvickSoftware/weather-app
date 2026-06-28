@@ -7,7 +7,7 @@ data class HomeUiState(
 
     val isLoading: Boolean = false,
 
-    val weather: CurrentWeather? = null,
+    val weather: Weather? = null,
 
     val error: String? = null
 )

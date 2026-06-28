@@ -16,6 +16,9 @@ interface WeatherDao {
     @Query("SELECT * FROM weather WHERE city = :city")
     fun observeCurrentWeather(city: String): Flow<WeatherEntity?>
 
+    @Query("SELECT * FROM weather WHERE city = :city")
+    suspend fun getCurrentWeather(city: String): WeatherEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentWeather(weather: WeatherEntity)
 
@@ -23,22 +26,12 @@ interface WeatherDao {
 
 
 
-
-
     // Hourly Forecast
-    @Query("""
-        SELECT * FROM hourly_forecast
-        WHERE city = :city
-        ORDER BY time
-    """)
-    fun observeHourlyForecast(
-        city: String
-    ): Flow<List<HourlyForecastEntity>>
+    @Query("SELECT * FROM hourly_forecast WHERE city = :city ORDER BY time")
+    fun observeHourlyForecast(city: String): Flow<List<HourlyForecastEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHourlyForecast(
-        hourly: List<HourlyForecastEntity>
-    )
+    suspend fun insertHourlyForecast(hourly: List<HourlyForecastEntity>)
 
     @Query("DELETE FROM hourly_forecast WHERE city = :city")
     suspend fun deleteHourlyForecast(city: String)
@@ -47,22 +40,12 @@ interface WeatherDao {
 
 
 
-
-
     // Daily Forecast
-    @Query("""
-        SELECT * FROM daily_forecast
-        WHERE city = :city
-        ORDER BY date
-    """)
-    fun observeDailyForecast(
-        city: String
-    ): Flow<List<DailyForecastEntity>>
+    @Query("SELECT * FROM daily_forecast WHERE city = :city ORDER BY date")
+    fun observeDailyForecast(city: String): Flow<List<DailyForecastEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDailyForecast(
-        daily: List<DailyForecastEntity>
-    )
+    suspend fun insertDailyForecast(daily: List<DailyForecastEntity>)
 
     @Query("DELETE FROM daily_forecast WHERE city = :city")
     suspend fun deleteDailyForecast(city: String)

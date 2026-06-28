@@ -1,14 +1,15 @@
 package com.souvick.weatherapp.domain.usecase
 
+import com.souvick.weatherapp.domain.model.Weather
 import com.souvick.weatherapp.domain.repository.WeatherRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetWeatherUseCase @Inject constructor(
     private val repository: WeatherRepository
 ) {
 
-    suspend operator fun invoke(
-        city: String
-    ) = repository.getWeather(city)
+    operator fun invoke(city: String) =
+        repository.getWeather(city)
 
 }

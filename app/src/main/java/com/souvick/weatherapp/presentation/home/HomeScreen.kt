@@ -39,16 +39,16 @@ fun HomeScreen(
             uiState.weather != null -> {
 
                 Text(
-                    text = uiState.weather!!.city,
+                    text = uiState.weather!!.current.city,
                     style = MaterialTheme.typography.headlineMedium
                 )
 
                 Text(
-                    text = "${uiState.weather!!.temperature}°C",
+                    text = "${uiState.weather!!.current.temperature}°C",
                     style = MaterialTheme.typography.displayLarge
                 )
 
-                Text(uiState.weather!!.condition)
+                Text(uiState.weather!!.current.condition)
             }
         }
     }
