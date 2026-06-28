@@ -1,6 +1,7 @@
 package com.souvick.weatherapp.data.repository
 
 import com.souvick.weatherapp.core.common.Resource
+import com.souvick.weatherapp.data.mapper.toDomain
 import com.souvick.weatherapp.data.remote.api.WeatherApi
 import com.souvick.weatherapp.domain.model.Weather
 import com.souvick.weatherapp.domain.repository.WeatherRepository
@@ -14,7 +15,13 @@ class WeatherRepositoryImpl @Inject constructor(
         city: String
     ): Resource<Weather> {
 
-        TODO("Map API response to domain model")
+        return try {
 
+            val response = api.getForecast(city)
+            Resource.Success(response.toDomain())
+
+        } catch (e: Exception) {
+            Resource.Error( e.message ?: "Something went wrong", e)
+        }
     }
 }

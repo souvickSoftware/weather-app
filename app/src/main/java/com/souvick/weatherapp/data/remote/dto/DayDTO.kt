@@ -4,13 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HourDTO(
+data class DayDTO(
 
-    @SerialName("time")
-    val time: String,
+    @SerialName("maxtemp_c")
+    val maxTemp: Double,
 
-    @SerialName("temp_c")
-    val temperature: Double,
+    @SerialName("mintemp_c")
+    val minTemp: Double,
 
     @SerialName("condition")
     val condition: ConditionDTO

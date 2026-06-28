@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class  ForecastDTO (
-    @SerialName("text")
-    val text: String,
+    @SerialName("forecastday")
+    val forecastDays: List<ForecastDayDTO>
 )
