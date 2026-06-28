@@ -1,14 +1,10 @@
 package com.souvick.weatherapp.domain.model
 
 data class Weather(
-    val city: String,
-    val country: String,
-    val temperature: Double,
-    val feelsLike: Double,
-    val humidity: Int,
-    val pressure: Double,
-    val windSpeed: Double,
-    val uvIndex: Double,
-    val condition: String,
-    val iconUrl: String
+
+    val current: CurrentWeather,
+
+    val hourly: List<HourlyWeather>,
+
+    val daily: List<DailyWeather>
 )

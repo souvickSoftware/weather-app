@@ -3,7 +3,7 @@ package com.souvick.weatherapp.data.repository
 import com.souvick.weatherapp.core.common.Resource
 import com.souvick.weatherapp.data.mapper.toDomain
 import com.souvick.weatherapp.data.remote.api.WeatherApi
-import com.souvick.weatherapp.domain.model.Weather
+import com.souvick.weatherapp.domain.model.CurrentWeather
 import com.souvick.weatherapp.domain.repository.WeatherRepository
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getWeather(
         city: String
-    ): Resource<Weather> {
+    ): Resource<CurrentWeather> {
 
         return try {
 
