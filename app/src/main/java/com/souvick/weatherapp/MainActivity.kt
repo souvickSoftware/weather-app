@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import com.souvick.weatherapp.data.remote.api.WeatherApi
 import com.souvick.weatherapp.presentation.home.HomeScreen
 import com.souvick.weatherapp.presentation.home.HomeViewModel
+import com.souvick.weatherapp.presentation.navigation.AppNavigation
 import com.souvick.weatherapp.presentation.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,9 +36,11 @@ class MainActivity : ComponentActivity() {
 
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                HomeScreen(
-                    uiState = uiState
-                )
+                setContent {
+                    WeatherAppTheme {
+                        AppNavigation()
+                    }
+                }
             }
         }
     }

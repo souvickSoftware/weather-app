@@ -2,11 +2,13 @@ package com.souvick.weatherapp.data.repository
 
 import com.souvick.weatherapp.core.common.CacheConstants
 import com.souvick.weatherapp.data.local.dao.WeatherDao
+import com.souvick.weatherapp.data.mapper.toCity
 import com.souvick.weatherapp.data.mapper.toDailyEntities
 import com.souvick.weatherapp.data.mapper.toHourlyEntities
 import com.souvick.weatherapp.data.mapper.toWeather
 import com.souvick.weatherapp.data.mapper.toWeatherEntity
 import com.souvick.weatherapp.data.remote.api.WeatherApi
+import com.souvick.weatherapp.domain.model.City
 import com.souvick.weatherapp.domain.model.Weather
 import com.souvick.weatherapp.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
@@ -74,6 +76,15 @@ class WeatherRepositoryImpl @Inject constructor(
         dao.insertDailyForecast(
             response.toDailyEntities()
         )
+
+    }
+
+    override suspend fun searchCities(
+        query: String
+    ): List<City> {
+
+        return api.searchCities(query)
+            .map { it.toCity() }
 
     }
 

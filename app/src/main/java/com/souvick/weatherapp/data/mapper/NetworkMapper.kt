@@ -4,6 +4,8 @@ import com.souvick.weatherapp.data.local.entity.DailyForecastEntity
 import com.souvick.weatherapp.data.local.entity.HourlyForecastEntity
 import com.souvick.weatherapp.data.local.entity.WeatherEntity
 import com.souvick.weatherapp.data.remote.dto.ForecastResponseDTO
+import com.souvick.weatherapp.data.remote.dto.SearchCityDTO
+import com.souvick.weatherapp.domain.model.City
 
 
 fun ForecastResponseDTO.toWeatherEntity(): WeatherEntity {
@@ -60,3 +62,13 @@ fun ForecastResponseDTO.toDailyEntities(): List<DailyForecastEntity> {
     }
 
 }
+
+fun SearchCityDTO.toCity() =
+    City(
+        id = id,
+        name = name,
+        region = region,
+        country = country,
+        latitude = latitude,
+        longitude = longitude
+    )

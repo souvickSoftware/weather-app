@@ -1,6 +1,7 @@
 package com.souvick.weatherapp.domain.repository
 
 import com.souvick.weatherapp.core.common.Resource
+import com.souvick.weatherapp.domain.model.City
 import com.souvick.weatherapp.domain.model.CurrentWeather
 import com.souvick.weatherapp.domain.model.Weather
 import kotlinx.coroutines.flow.Flow
@@ -12,4 +13,7 @@ interface WeatherRepository {
         forceRefresh: Boolean = false
     ): Flow<Weather>
 
+    suspend fun searchCities(
+        query: String
+    ): List<City>
 }

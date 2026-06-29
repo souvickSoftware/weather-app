@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.souvick.weatherapp.presentation.home.components.AirQualityChip
 import com.souvick.weatherapp.presentation.home.components.CurrentWeatherSection
 import com.souvick.weatherapp.presentation.home.components.HourlyForecastSection
+import com.souvick.weatherapp.presentation.home.components.LoadingHomeScreen
 import com.souvick.weatherapp.presentation.home.components.WeatherIllustration
 import com.souvick.weatherapp.presentation.home.components.WeatherTopBar
 import com.souvick.weatherapp.presentation.home.components.WeeklyForecastSection
@@ -37,8 +38,14 @@ import com.souvick.weatherapp.presentation.home.components.WeeklyForecastSection
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    onSearchClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    if (uiState.isLoading) {
+        LoadingHomeScreen()
+        return
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -63,7 +70,8 @@ fun HomeScreen(
 
             WeatherTopBar(
                 city = uiState.weather?.current?.city ?: "Bengaluru",
-                country = uiState.weather?.current?.country ?: "India"
+                country = uiState.weather?.current?.country ?: "India",
+                onSearchClick
             )
 
             Spacer(modifier = Modifier.height(20.dp))
