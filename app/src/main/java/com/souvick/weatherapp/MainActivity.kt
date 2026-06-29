@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.souvick.weatherapp.data.remote.api.WeatherApi
 import com.souvick.weatherapp.presentation.home.HomeScreen
+import com.souvick.weatherapp.presentation.home.HomeViewModel
 import com.souvick.weatherapp.presentation.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,7 +30,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppTheme {
-                HomeScreen()
+
+                val viewModel: HomeViewModel = hiltViewModel()
+
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                HomeScreen(
+                    uiState = uiState
+                )
             }
         }
     }
