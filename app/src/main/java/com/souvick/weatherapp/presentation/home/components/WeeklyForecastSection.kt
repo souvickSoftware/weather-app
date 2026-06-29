@@ -23,6 +23,8 @@ fun WeeklyForecastSection(
 
     Column {
 
+        Spacer(Modifier.height(4.dp))
+
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

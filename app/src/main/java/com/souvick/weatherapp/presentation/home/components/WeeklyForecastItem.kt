@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.souvick.weatherapp.domain.model.DailyWeather
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun WeeklyForecastItem(
@@ -24,7 +27,7 @@ fun WeeklyForecastItem(
     ) {
 
         Text(
-            weather.date,
+            formatDay(weather.date),
             modifier = Modifier.weight(1f)
         )
 
@@ -41,16 +44,35 @@ fun WeeklyForecastItem(
             modifier = Modifier.weight(1f)
         )
 
+        Spacer(Modifier.width(4.dp))
+
         Text("${weather.minTemperature.toInt()}°")
 
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(5.dp))
 
         TemperatureBar(.7f)
 
-        Spacer(Modifier.width(10.dp))
+        Spacer(Modifier.width(5.dp))
 
         Text("${weather.maxTemperature.toInt()}°")
 
     }
 
+}
+
+private fun formatDay(date: String): String {
+
+    val localDate = LocalDate.parse(date)
+
+    return when {
+
+        localDate == LocalDate.now() ->
+            "Today"
+
+        else ->
+            localDate.dayOfWeek.getDisplayName(
+                TextStyle.SHORT,
+                Locale.getDefault()
+            )
+    }
 }

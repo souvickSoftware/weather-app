@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.souvick.weatherapp.domain.model.HourlyWeather
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun HourlyForecastItem(
@@ -39,7 +42,7 @@ fun HourlyForecastItem(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(weather.time)
+            Text(formatHour(weather.time))
 
             Spacer(Modifier.height(12.dp))
 
@@ -57,4 +60,21 @@ fun HourlyForecastItem(
 
     }
 
+}
+
+private fun formatHour(time: String): String {
+
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+
+    val localDateTime = LocalDateTime.parse(time, formatter)
+
+    return if (localDateTime.hour == LocalDateTime.now().hour &&
+        localDateTime.toLocalDate() == LocalDate.now()
+    ) {
+        "Now"
+    } else {
+        localDateTime.format(
+            DateTimeFormatter.ofPattern("h a")
+        )
+    }
 }

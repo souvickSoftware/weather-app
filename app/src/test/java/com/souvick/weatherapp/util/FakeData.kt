@@ -26,6 +26,7 @@ object FakeData {
     )
 
     fun currentEntity() = WeatherEntity(
+        cityKey = CITY,
         city = CITY,
         country = "United Kingdom",
         temperature = 24.5,

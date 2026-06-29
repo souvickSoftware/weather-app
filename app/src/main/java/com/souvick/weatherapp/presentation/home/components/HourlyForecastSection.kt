@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.souvick.weatherapp.core.extensions.next24Hours
 import com.souvick.weatherapp.domain.model.HourlyWeather
 
 @Composable
@@ -16,7 +17,7 @@ fun HourlyForecastSection(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        itemsIndexed(hourly) { index, item ->
+        itemsIndexed(hourly.next24Hours()) { index, item ->
 
             HourlyForecastItem(
                 weather = item,

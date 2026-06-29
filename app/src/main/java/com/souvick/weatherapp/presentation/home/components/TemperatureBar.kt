@@ -13,7 +13,7 @@ fun TemperatureBar(
 
     LinearProgressIndicator(
         progress = { progress },
-        modifier = Modifier.width(90.dp)
+        modifier = Modifier.width(80.dp)
     )
 
 }
