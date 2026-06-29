@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 data class WeatherEntity(
 
     @PrimaryKey
+    val cityKey: String,
+
     val city: String,
 
     val country: String,

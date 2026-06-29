@@ -62,19 +62,19 @@ class WeatherRepositoryImpl @Inject constructor(
         val response = api.getForecast(city)
 
         dao.insertCurrentWeather(
-            response.toWeatherEntity()
+            response.toWeatherEntity(cityKey = city)
         )
 
         dao.deleteHourlyForecast(city)
 
         dao.insertHourlyForecast(
-            response.toHourlyEntities()
+            response.toHourlyEntities(cityKey = city)
         )
 
         dao.deleteDailyForecast(city)
 
         dao.insertDailyForecast(
-            response.toDailyEntities()
+            response.toDailyEntities(cityKey = city)
         )
 
     }

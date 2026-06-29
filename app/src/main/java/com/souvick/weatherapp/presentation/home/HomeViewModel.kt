@@ -41,23 +41,22 @@ class HomeViewModel @Inject constructor(
 //        observeWeather(currentCity)
     }
 
-    private fun observeWeather(
-        city: String
+    private fun fetchWeather(
+        city: String,
+        forceRefresh: Boolean
     ) {
+        job?.cancel()
 
-        viewModelScope.launch {
-
-            getWeatherUseCase(city)
-                .collect { weather ->
-
-                    _uiState.value = HomeUiState(
-                        weather = weather
-                    )
-
+        job = viewModelScope.launch {
+            getWeatherUseCase(
+                city = city,
+                forceRefresh = forceRefresh
+            ).collect { weather ->
+                _uiState.update {
+                    it.copy(weather = weather)
                 }
-
+            }
         }
-
     }
 
     fun loadWeather(city: String) {
@@ -70,45 +69,13 @@ class HomeViewModel @Inject constructor(
             putString(KEY_SELECTED_CITY, city)
         }
 
-        job?.cancel()
-
-        job = viewModelScope.launch {
-
-            getWeatherUseCase(city)
-                .collect { weather ->
-
-                    _uiState.update {
-                        it.copy(weather = weather)
-                    }
-
-                }
-
-        }
-
+        fetchWeather(city, false)
     }
 
     fun refreshWeather() {
-
-        currentCity?.let { city ->
-
-            job?.cancel()
-
-            job = viewModelScope.launch {
-
-                getWeatherUseCase(
-                    city = city,
-                    forceRefresh = true
-                ).collect { weather ->
-
-                    _uiState.update {
-                        it.copy(weather = weather)
-                    }
-
-                }
-
-            }
-
+        currentCity?.let {
+            fetchWeather(it, true)
         }
-
     }
+
 }

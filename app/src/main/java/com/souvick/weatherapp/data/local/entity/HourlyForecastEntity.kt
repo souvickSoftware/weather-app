@@ -9,6 +9,8 @@ data class HourlyForecastEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
+    val cityKey: String,
+
     val city: String,
 
     val time: String,

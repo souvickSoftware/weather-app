@@ -8,9 +8,10 @@ import com.souvick.weatherapp.data.remote.dto.SearchCityDTO
 import com.souvick.weatherapp.domain.model.City
 
 
-fun ForecastResponseDTO.toWeatherEntity(): WeatherEntity {
+fun ForecastResponseDTO.toWeatherEntity(cityKey: String): WeatherEntity {
 
     return WeatherEntity(
+        cityKey = cityKey,
         city = location.name,
         country = location.country,
         temperature = current.temperature,
@@ -25,7 +26,7 @@ fun ForecastResponseDTO.toWeatherEntity(): WeatherEntity {
     )
 }
 
-fun ForecastResponseDTO.toHourlyEntities(): List<HourlyForecastEntity> {
+fun ForecastResponseDTO.toHourlyEntities(cityKey: String): List<HourlyForecastEntity> {
 
     return forecast.forecastDays
         .flatMap { forecastDay ->
@@ -33,6 +34,7 @@ fun ForecastResponseDTO.toHourlyEntities(): List<HourlyForecastEntity> {
             forecastDay.hours.map { hour ->
 
                 HourlyForecastEntity(
+                    cityKey = cityKey,
                     city = location.name,
                     time = hour.time,
                     temperature = hour.temperature,
@@ -46,11 +48,12 @@ fun ForecastResponseDTO.toHourlyEntities(): List<HourlyForecastEntity> {
 
 }
 
-fun ForecastResponseDTO.toDailyEntities(): List<DailyForecastEntity> {
+fun ForecastResponseDTO.toDailyEntities(cityKey: String): List<DailyForecastEntity> {
 
     return forecast.forecastDays.map { day ->
 
         DailyForecastEntity(
+            cityKey = cityKey,
             city = location.name,
             date = day.date,
             maxTemperature = day.day.maxTemp,
