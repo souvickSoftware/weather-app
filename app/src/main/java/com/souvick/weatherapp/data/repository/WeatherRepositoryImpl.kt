@@ -41,7 +41,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 dao.observeDailyForecast(city)
             ) { current, hourly, daily ->
                 requireNotNull(current)
-                    .toWeather(hourly, daily)
+                    .toWeather(hourly, daily, current.lastUpdated)
             }
         )
     }

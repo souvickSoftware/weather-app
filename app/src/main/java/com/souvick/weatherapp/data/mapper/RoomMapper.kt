@@ -51,13 +51,15 @@ fun List<DailyForecastEntity>.toDailyWeather() =
 
 fun WeatherEntity.toWeather(
     hourly: List<HourlyForecastEntity>,
-    daily: List<DailyForecastEntity>
+    daily: List<DailyForecastEntity>,
+    lastUpdated: Long
 ): Weather {
 
     return Weather(
         current = toCurrentWeather(),
         hourly = hourly.toHourlyWeather(),
-        daily = daily.toDailyWeather()
+        daily = daily.toDailyWeather(),
+        lastUpdated = lastUpdated
     )
 
 }

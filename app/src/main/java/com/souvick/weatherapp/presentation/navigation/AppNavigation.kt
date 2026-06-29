@@ -53,6 +53,9 @@ fun AppNavigation() {
                 uiState = uiState,
                 onSearchClick = {
                     navController.navigate(Screen.Search.route)
+                },
+                onRefreshClick = {
+                    homeViewModel.refreshWeather()
                 }
             )
 

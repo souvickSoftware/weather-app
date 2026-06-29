@@ -6,5 +6,7 @@ data class Weather(
 
     val hourly: List<HourlyWeather>,
 
-    val daily: List<DailyWeather>
+    val daily: List<DailyWeather>,
+
+    val lastUpdated: Long
 )

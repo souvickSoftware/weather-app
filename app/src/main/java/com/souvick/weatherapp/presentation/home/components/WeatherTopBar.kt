@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,6 +29,7 @@ fun WeatherTopBar(
     city: String,
     country: String,
     onSearchClick: () -> Unit,
+    onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -74,12 +76,12 @@ fun WeatherTopBar(
         }
 
         IconButton(
-            onClick = {}
+            onClick = onRefreshClick
         ) {
 
             Icon(
-                Icons.Default.MoreHoriz,
-                null,
+                Icons.Default.Refresh,
+                "Refresh",
                 tint = Color.White
             )
 

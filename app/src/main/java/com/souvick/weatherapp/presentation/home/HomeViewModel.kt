@@ -86,4 +86,29 @@ class HomeViewModel @Inject constructor(
         }
 
     }
+
+    fun refreshWeather() {
+
+        currentCity?.let { city ->
+
+            job?.cancel()
+
+            job = viewModelScope.launch {
+
+                getWeatherUseCase(
+                    city = city,
+                    forceRefresh = true
+                ).collect { weather ->
+
+                    _uiState.update {
+                        it.copy(weather = weather)
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
 }

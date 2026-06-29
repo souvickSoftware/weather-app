@@ -30,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.souvick.weatherapp.presentation.home.components.AirQualityChip
 import com.souvick.weatherapp.presentation.home.components.CurrentWeatherSection
 import com.souvick.weatherapp.presentation.home.components.HourlyForecastSection
+import com.souvick.weatherapp.presentation.home.components.LastUpdatedSection
 import com.souvick.weatherapp.presentation.home.components.LoadingHomeScreen
 import com.souvick.weatherapp.presentation.home.components.WeatherIllustration
 import com.souvick.weatherapp.presentation.home.components.WeatherTopBar
@@ -39,6 +40,7 @@ import com.souvick.weatherapp.presentation.home.components.WeeklyForecastSection
 fun HomeScreen(
     uiState: HomeUiState,
     onSearchClick: () -> Unit,
+    onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (uiState.isLoading) {
@@ -71,7 +73,8 @@ fun HomeScreen(
             WeatherTopBar(
                 city = uiState.weather?.current?.city ?: "Bengaluru",
                 country = uiState.weather?.current?.country ?: "India",
-                onSearchClick
+                onSearchClick = onSearchClick,
+                onRefreshClick = onRefreshClick
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -86,13 +89,14 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-//            WeatherIllustration(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(180.dp)
-//            )
-//
-//            Spacer(modifier = Modifier.height(24.dp))
+            uiState.weather?.lastUpdated?.let {
+                LastUpdatedSection(
+                    lastUpdated = it,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             Surface(
                 modifier = Modifier
