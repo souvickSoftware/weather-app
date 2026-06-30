@@ -2,6 +2,7 @@ package com.souvick.weatherapp.presentation.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.souvick.weatherapp.core.extensions.toUserMessage
 import com.souvick.weatherapp.domain.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,25 +49,35 @@ class SearchViewModel @Inject constructor(
         }
 
     }
-
-    private suspend fun search(
-        query: String
-    ) {
+    private suspend fun search(query: String) {
 
         _uiState.update {
-            it.copy(isLoading = true)
-        }
-
-        val cities = repository.searchCities(query)
-
-        _uiState.update {
-
             it.copy(
-                isLoading = false,
-                cities = cities
+                isLoading = true,
+                errorMessage = null
             )
-
         }
 
+        try {
+
+            val cities = repository.searchCities(query)
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    cities = cities
+                )
+            }
+
+        } catch (e: Exception) {
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    errorMessage = e.toUserMessage()
+                )
+            }
+
+        }
     }
 }

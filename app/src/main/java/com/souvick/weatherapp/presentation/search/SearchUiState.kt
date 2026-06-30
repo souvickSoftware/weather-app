@@ -8,6 +8,7 @@ data class SearchUiState(
 
     val cities: List<City> = emptyList(),
 
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
 
+    val errorMessage: String? = null
 )

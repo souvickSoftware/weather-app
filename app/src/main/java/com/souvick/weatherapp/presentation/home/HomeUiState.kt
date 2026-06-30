@@ -9,5 +9,5 @@ data class HomeUiState(
 
     val weather: Weather? = null,
 
-    val error: String? = null
+    val errorMessage: String? = null
 )

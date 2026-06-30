@@ -16,10 +16,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -47,86 +52,100 @@ fun HomeScreen(
         LoadingHomeScreen()
         return
     }
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF4A90E2),
-                        Color(0xFF7FD6FF),
-                        Color(0xFFEAF7FF)
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+        }
+    }
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
+        containerColor = Color.Transparent
+    ) { padding ->
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF4A90E2),
+                            Color(0xFF7FD6FF),
+                            Color(0xFFEAF7FF)
+                        )
                     )
                 )
-            )
-    ) {
-
-        val scrollState = rememberScrollState()
-
-        Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
         ) {
 
-            Spacer(modifier = Modifier.height(48.dp))
+            val scrollState = rememberScrollState()
 
-            WeatherTopBar(
-                city = uiState.weather?.current?.city ?: "Bengaluru",
-                country = uiState.weather?.current?.country ?: "India",
-                onSearchClick = onSearchClick,
-                onRefreshClick = onRefreshClick
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            CurrentWeatherSection(
-                current = uiState.weather?.current
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            AirQualityChip()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            uiState.weather?.lastUpdated?.let {
-                LastUpdatedSection(
-                    lastUpdated = it,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize(),
-                shape = RoundedCornerShape(
-                    topStart = 32.dp,
-                    topEnd = 32.dp
-                ),
-                color = Color.White
+            Column(
+                modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
             ) {
 
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                Spacer(modifier = Modifier.height(48.dp))
+
+                WeatherTopBar(
+                    city = uiState.weather?.current?.city ?: "Bengaluru",
+                    country = uiState.weather?.current?.country ?: "India",
+                    onSearchClick = onSearchClick,
+                    onRefreshClick = onRefreshClick
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                CurrentWeatherSection(
+                    current = uiState.weather?.current
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                AirQualityChip()
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                uiState.weather?.lastUpdated?.let {
+                    LastUpdatedSection(
+                        lastUpdated = it,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    shape = RoundedCornerShape(
+                        topStart = 32.dp,
+                        topEnd = 32.dp
+                    ),
+                    color = Color.White
                 ) {
 
-                    HourlyForecastSection(
-                        hourly = uiState.weather?.hourly.orEmpty()
-                    )
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
 
-                    WeeklyForecastSection(
-                        daily = uiState.weather?.daily.orEmpty()
-                    )
+                        HourlyForecastSection(
+                            hourly = uiState.weather?.hourly.orEmpty()
+                        )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        WeeklyForecastSection(
+                            daily = uiState.weather?.daily.orEmpty()
+                        )
+
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
+
                 }
 
             }
 
         }
-
     }
 }

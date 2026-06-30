@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.core.content.edit
+import com.souvick.weatherapp.core.extensions.toUserMessage
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -48,17 +49,44 @@ class HomeViewModel @Inject constructor(
         job?.cancel()
 
         job = viewModelScope.launch {
-            getWeatherUseCase(
-                city = city,
-                forceRefresh = forceRefresh
-            ).collect { weather ->
-                _uiState.update {
-                    it.copy(weather = weather)
-                }
+
+            _uiState.update {
+                it.copy(
+                    isLoading = true,
+                    errorMessage = null
+                )
             }
+
+            try {
+
+                getWeatherUseCase(
+                    city = city,
+                    forceRefresh = forceRefresh
+                ).collect { weather ->
+
+                    _uiState.update {
+                        it.copy(
+                            weather = weather,
+                            isLoading = false,
+                            errorMessage = null
+                        )
+                    }
+
+                }
+
+            } catch (e: Exception) {
+
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = e.toUserMessage()
+                    )
+                }
+
+            }
+
         }
     }
-
     fun loadWeather(city: String) {
 
         if (city == currentCity) return

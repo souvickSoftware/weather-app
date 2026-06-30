@@ -23,7 +23,7 @@ fun WeatherIllustration(
         AsyncImage(
             model = current?.iconUrl,
             contentDescription = null,
-            modifier = Modifier.size(140.dp)
+            modifier = Modifier.size(120.dp)
         )
 
     }
