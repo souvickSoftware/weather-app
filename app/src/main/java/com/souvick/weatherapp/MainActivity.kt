@@ -31,16 +31,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppTheme {
-
-                val viewModel: HomeViewModel = hiltViewModel()
-
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-                setContent {
-                    WeatherAppTheme {
-                        AppNavigation()
-                    }
-                }
+                AppNavigation()
             }
         }
     }
